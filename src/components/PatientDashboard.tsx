@@ -5,7 +5,7 @@ import VitalSign from "@/components/VitalSign";
 import LiveECG from "@/components/LiveECG";
 import PatientCondition from "@/components/PatientCondition";
 import SystemStatus from "@/components/SystemStatus";
-import { Heart, Thermometer } from "lucide-react";
+import { Heart, Thermometer, Landmark, Tree } from "lucide-react";
 
 // This would be replaced with Firebase real-time data
 const useMockData = () => {
@@ -52,12 +52,12 @@ const PatientDashboard = () => {
   const data = useMockData();
   
   return (
-    <div className="min-h-screen bg-customLavender-light p-4">
-      <Card className="mb-4 p-4 shadow-sm border-customLavender">
+    <div className="min-h-screen w-full bg-customLavender-light flex flex-col">
+      <Card className="m-4 p-4 shadow-sm border-customLavender">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-customLavender-dark">Patient Health Dashboard</h1>
           <div className="flex items-center gap-2">
-            <span className="inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+            <span className="inline-flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
             <span className="text-sm font-medium text-customLavender-medium">LIVE</span>
             <span className="text-sm text-customLavender-dark">
               Last Updated: {data.lastUpdated.toLocaleTimeString()}
@@ -66,38 +66,82 @@ const PatientDashboard = () => {
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mb-4">
-        <VitalSign 
-          title="Heart Rate"
-          value={data.heartRate}
-          unit="bpm"
-          icon={<Heart className="h-6 w-6 text-red-500" />}
-        />
-        <VitalSign 
-          title="Oxygen Saturation"
-          value={data.oxygenSaturation}
-          unit="%"
-          icon={<span className="text-blue-500 font-bold">O₂</span>}
-        />
-        <VitalSign 
-          title="Body Temperature"
-          value={data.temperature}
-          unit="°F"
-          icon={<Thermometer className="h-6 w-6 text-yellow-500" />}
-        />
-      </div>
-
-      <div className="flex flex-col md:flex-row gap-4">
-        <Card className="p-4 shadow-sm border-customLavender md:w-[70%]">
-          <h2 className="mb-4 text-lg font-semibold text-customLavender-dark">Live ECG</h2>
-          <LiveECG data={data.ecgData} />
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 px-4 flex-grow">
+        <div className="md:col-span-1 flex flex-col gap-4">
+          <VitalSign 
+            title="Heart Rate"
+            value={data.heartRate}
+            unit="bpm"
+            icon={<Heart className="h-6 w-6 text-red-500" />}
+          />
+          <VitalSign 
+            title="Oxygen Saturation"
+            value={data.oxygenSaturation}
+            unit="%"
+            icon={<span className="text-blue-500 font-bold">O₂</span>}
+          />
+          <VitalSign 
+            title="Body Temperature"
+            value={data.temperature}
+            unit="°F"
+            icon={<Thermometer className="h-6 w-6 text-yellow-500" />}
+          />
+          <Card className="p-4 shadow-sm border-customLavender bg-gradient-to-br from-white to-customLavender-light">
+            <div className="flex items-center gap-2">
+              <Landmark className="h-6 w-6 text-customLavender-medium" />
+              <h3 className="text-lg font-semibold text-customLavender-dark">Hospital Info</h3>
+            </div>
+            <div className="mt-2">
+              <p className="text-sm text-customLavender-dark">Central Hospital</p>
+              <p className="text-xs text-customLavender-medium">Device ID: MED-2024-457</p>
+              <p className="text-xs text-customLavender-medium">Room: 302-B</p>
+            </div>
+          </Card>
+          <Card className="p-4 shadow-sm border-customLavender bg-gradient-to-br from-white to-customLavender-light">
+            <div className="flex items-center gap-2">
+              <Tree className="h-6 w-6 text-green-500" />
+              <h3 className="text-lg font-semibold text-customLavender-dark">Environment</h3>
+            </div>
+            <div className="mt-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-customLavender-medium">Room Temp:</span>
+                <span className="text-sm font-medium text-customLavender-dark">72°F</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-customLavender-medium">Humidity:</span>
+                <span className="text-sm font-medium text-customLavender-dark">45%</span>
+              </div>
+            </div>
+          </Card>
+        </div>
         
-        <PatientCondition 
-          condition={data.condition} 
-          confidence={data.confidence} 
-          className="md:w-[30%]"
-        />
+        <div className="md:col-span-3 flex flex-col gap-4">
+          <div className="flex flex-col md:flex-row gap-4 flex-grow">
+            <Card className="p-4 shadow-sm border-customLavender md:w-[70%] flex flex-col">
+              <h2 className="mb-4 text-lg font-semibold text-customLavender-dark">Live ECG</h2>
+              <div className="flex-grow">
+                <LiveECG data={data.ecgData} />
+              </div>
+            </Card>
+            
+            <PatientCondition 
+              condition={data.condition} 
+              confidence={data.confidence} 
+              className="md:w-[30%]"
+            />
+          </div>
+          
+          <Card className="p-4 shadow-sm border-customLavender bg-gradient-to-br from-white to-customLavender-light">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-customLavender-dark">Patient Notes</h2>
+              <span className="text-xs text-customLavender-medium">Updated: Today, 2:45 PM</span>
+            </div>
+            <p className="mt-2 text-sm text-customLavender-dark">
+              Patient is stable and responding well to treatment. Vitals are within normal range.
+              Continue monitoring ECG patterns for any irregularities.
+            </p>
+          </Card>
+        </div>
       </div>
 
       <SystemStatus 
