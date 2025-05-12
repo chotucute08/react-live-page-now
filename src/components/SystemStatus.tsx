@@ -8,7 +8,7 @@ interface SystemStatusProps {
 
 const SystemStatus = ({ status, deviceInfo }: SystemStatusProps) => {
   return (
-    <div className="mt-4 py-3 text-sm text-gray-500">
+    <div className="mt-4 py-3 text-sm text-customLavender-medium">
       <div>System Status: {status}</div>
       <div>Device Info: {deviceInfo}</div>
     </div>

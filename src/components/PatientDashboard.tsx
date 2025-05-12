@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card";
 import VitalSign from "@/components/VitalSign";
 import LiveECG from "@/components/LiveECG";
 import PatientCondition from "@/components/PatientCondition";
-import VitalsHistory from "@/components/VitalsHistory";
 import SystemStatus from "@/components/SystemStatus";
 import { Heart, Thermometer } from "lucide-react";
 
@@ -53,21 +52,21 @@ const PatientDashboard = () => {
   const data = useMockData();
   
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <Card className="mb-4 p-4 shadow-sm">
+    <div className="min-h-screen bg-customLavender-light p-4">
+      <Card className="mb-4 p-4 shadow-sm border-customLavender">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-800">Patient Health Dashboard</h1>
+          <h1 className="text-2xl font-bold text-customLavender-dark">Patient Health Dashboard</h1>
           <div className="flex items-center gap-2">
             <span className="inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-            <span className="text-sm font-medium text-gray-500">LIVE</span>
-            <span className="text-sm text-gray-400">
+            <span className="text-sm font-medium text-customLavender-medium">LIVE</span>
+            <span className="text-sm text-customLavender-dark">
               Last Updated: {data.lastUpdated.toLocaleTimeString()}
             </span>
           </div>
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mb-4">
         <VitalSign 
           title="Heart Rate"
           value={data.heartRate}
@@ -88,19 +87,17 @@ const PatientDashboard = () => {
         />
       </div>
 
-      <div className="mt-4">
-        <Card className="p-4 shadow-sm">
-          <h2 className="mb-4 text-lg font-semibold text-gray-700">Live ECG</h2>
+      <div className="flex flex-col md:flex-row gap-4">
+        <Card className="p-4 shadow-sm border-customLavender md:w-[70%]">
+          <h2 className="mb-4 text-lg font-semibold text-customLavender-dark">Live ECG</h2>
           <LiveECG data={data.ecgData} />
         </Card>
-      </div>
-
-      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+        
         <PatientCondition 
           condition={data.condition} 
           confidence={data.confidence} 
+          className="md:w-[30%]"
         />
-        <VitalsHistory data={data.ecgData} />
       </div>
 
       <SystemStatus 

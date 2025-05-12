@@ -22,7 +22,7 @@ const LiveECG = ({ data }: LiveECGProps) => {
           <Line
             type="monotone"
             dataKey="value1"
-            stroke="#E100FF"
+            stroke="#9a9acc"
             strokeWidth={2}
             dot={false}
             isAnimationActive={false}
@@ -30,7 +30,7 @@ const LiveECG = ({ data }: LiveECGProps) => {
           <Line
             type="monotone"
             dataKey="value2"
-            stroke="#22c55e"
+            stroke="#8e8ec0"
             strokeWidth={2}
             dot={false}
             isAnimationActive={false}

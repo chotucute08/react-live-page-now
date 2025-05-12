@@ -6,9 +6,10 @@ import { Progress } from "@/components/ui/progress";
 interface PatientConditionProps {
   condition: string;
   confidence: number;
+  className?: string;
 }
 
-const PatientCondition = ({ condition, confidence }: PatientConditionProps) => {
+const PatientCondition = ({ condition, confidence, className = "" }: PatientConditionProps) => {
   const getConditionColor = (condition: string) => {
     switch (condition.toLowerCase()) {
       case "normal":
@@ -18,15 +19,15 @@ const PatientCondition = ({ condition, confidence }: PatientConditionProps) => {
       case "critical":
         return "text-red-500";
       default:
-        return "text-blue-500";
+        return "text-customLavender-dark";
     }
   };
 
   const conditionColor = getConditionColor(condition);
 
   return (
-    <Card className="p-6 shadow-sm">
-      <h2 className="mb-4 text-lg font-semibold text-gray-700">
+    <Card className={`p-6 shadow-sm border-customLavender flex flex-col justify-center h-full ${className}`}>
+      <h2 className="mb-4 text-lg font-semibold text-customLavender-dark">
         Patient Condition Prediction
       </h2>
       <div className="mb-2 flex items-center gap-2">
@@ -40,10 +41,10 @@ const PatientCondition = ({ condition, confidence }: PatientConditionProps) => {
         ></span>
       </div>
       <div className="mb-1 flex items-center justify-between">
-        <span className="text-sm text-gray-500">Confidence:</span>
+        <span className="text-sm text-customLavender-medium">Confidence:</span>
         <span className="text-sm font-medium">{confidence}%</span>
       </div>
-      <Progress value={confidence} className="h-2" />
+      <Progress value={confidence} className="h-2 bg-customLavender-light" />
     </Card>
   );
 };
