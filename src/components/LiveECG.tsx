@@ -1,6 +1,6 @@
 
 import React from "react";
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid } from "recharts";
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts";
 
 interface ECGDataPoint {
   time: number;
@@ -14,19 +14,11 @@ interface LiveECGProps {
 
 const LiveECG = ({ data }: LiveECGProps) => {
   return (
-    <div className="h-full w-full min-h-[300px]">
+    <div className="h-64 w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e7e7f3" />
-          <XAxis dataKey="time" stroke="#9a9acc" />
-          <YAxis stroke="#9a9acc" />
-          <Tooltip 
-            contentStyle={{ 
-              backgroundColor: "white", 
-              border: "1px solid #d4d3e5",
-              borderRadius: "0.375rem" 
-            }} 
-          />
+        <LineChart data={data}>
+          <XAxis dataKey="time" hide />
+          <YAxis hide />
           <Line
             type="monotone"
             dataKey="value1"
